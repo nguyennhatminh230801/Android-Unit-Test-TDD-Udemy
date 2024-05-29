@@ -6,8 +6,10 @@ public class StringDuplicator {
      * @return concatenation of the argument with itself e.g. "hi" -> "hihi"
      */
     public String duplicate(String string) {
-        // the bug is triplication instead of duplication
-        return string + string + string;
-    }
+        /*Example with bug: the bug is triplication instead of duplication
+        return string + string + string;*/
 
+        //Fix it
+        return String.valueOf(string).repeat(2);
+    }
 }

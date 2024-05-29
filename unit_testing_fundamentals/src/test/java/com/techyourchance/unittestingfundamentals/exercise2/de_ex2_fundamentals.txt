@@ -1,0 +1,27 @@
+English:
+
+Description:
+Your goal is to find all bugs in StringDuplicator class without looking at its internal
+implementation.
+The test class StringDuplicatorTest already exists.
+Assume all arguments and return values are non-nullable unless annotated with @Nullable annotation.
+You should:
+1) Open the test class and set up system under test (SUT).
+2) Cover the functionality of SUT with tests and identify which requirements aren't satisfied.
+3) Read tests output and try to come up with a hypothesis about the production code.
+4) Fix the production code.
+5) Make sure that all tests pass.
+
+Vietnamese:
+
+Mô tả:
+Mục tiêu của bạn là tìm ra tất cả các lỗi trong lớp StringDuplicator mà không cần nhìn vào nội bộ của nó.
+thực hiện.
+Lớp kiểm tra StringDuplicatorTest đã tồn tại.
+Giả sử tất cả các parameter và giá trị trả về đều không thể NULL trừ khi được chú thích bằng chú thích @Nullable.
+Bạn nên:
+1) Mở lớp kiểm tra và thiết lập hệ thống đang kiểm tra (SUT).
+2) Bao quát chức năng của SUT bằng các bài kiểm tra và xác định những yêu cầu nào không được đáp ứng.
+3) Đọc kết quả kiểm tra và cố gắng đưa ra giả thuyết về mã sản xuất.
+4) Sửa mã sản xuất.
+5) Đảm bảo rằng tất cả các bài kiểm tra đều vượt qua.
