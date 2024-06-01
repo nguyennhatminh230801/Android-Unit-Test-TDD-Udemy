@@ -23,26 +23,44 @@ public class FetchUserProfileUseCaseSync {
         mUsersCache = usersCache;
     }
 
+    public UsersCache getUsersCache() {
+        return mUsersCache;
+    }
+
     public UseCaseResult fetchUserProfileSync(String userId) {
         EndpointResult endpointResult;
         try {
-            // the bug here is that userId is not passed to endpoint
+            /*// the bug here is that userId is not passed to endpoint
             endpointResult = mUserProfileHttpEndpointSync.getUserProfile("");
             // the bug here is that I don't check for successful result and it's also a duplication
             // of the call later in this method
             mUsersCache.cacheUser(
-                    new User(userId, endpointResult.getFullName(), endpointResult.getImageUrl()));
+                    new User(userId, endpointResult.getFullName(), endpointResult.getImageUrl()));*/
+
+            //Fix it
+            endpointResult = mUserProfileHttpEndpointSync.getUserProfile(userId);
+
+            if (isSuccessfulEndpointResult(endpointResult)) {
+                mUsersCache.cacheUser(
+                        new User(endpointResult.getUserId(), endpointResult.getFullName(), endpointResult.getImageUrl()));
+                return UseCaseResult.SUCCESS;
+            } else  {
+                return UseCaseResult.FAILURE;
+            }
         } catch (NetworkErrorException e) {
             return UseCaseResult.NETWORK_ERROR;
         }
 
+        /* Remove here
+
         if (isSuccessfulEndpointResult(endpointResult)) {
             mUsersCache.cacheUser(
                     new User(userId, endpointResult.getFullName(), endpointResult.getImageUrl()));
-        }
+        }*/
 
-        // the bug here is that I return wrong result in case of an unsuccessful server response
-        return UseCaseResult.SUCCESS;
+        /*
+        the bug here is that I return wrong result in case of an unsuccessful server response
+        return UseCaseResult.SUCCESS;*/
     }
 
     private boolean isSuccessfulEndpointResult(EndpointResult endpointResult) {
