@@ -1,0 +1,28 @@
+English:
+
+Description:
+Your goal is to find all bugs in FetchUserProfileUseCaseSync class without looking at its internal
+implementation.
+The test class FetchUserProfileUseCaseSyncTest already exists.
+You should:
+1) Open the test class and set up system under test (SUT).
+2) Implement the required test doubles.
+3) Think about the required test cases and list them as comments.
+4) Write actual tests and identify which requirements aren't satisfied.
+5) Read tests output and try to come up with a hypothesis about the production code.
+6) Fix the production code.
+7) Make sure that all tests pass.
+
+Vietnamese:
+Mục tiêu của bạn là tìm tất cả lỗi trong lớp FetchUserProfileUseCaseSync mà không cần xem đến implementation
+bên trong của nó.
+
+Lớp kiểm thử FetchUserProfileUseCaseSyncTest đã tồn tại. Bạn cần thực hiện các bước sau:
+
+1. Mở lớp kiểm thử và thiết lập hệ thống đang thử nghiệm (SUT).
+2. Triển khai các đối tượng giả mạo cần thiết (test doubles).
+3. Liệt kê các trường hợp kiểm thử cần thiết dưới dạng comment.
+4. Viết các kiểm thử thực tế và xác định các yêu cầu không được đáp ứng.
+5. Đọc kết quả kiểm thử và đưa ra giả thuyết về code chính.
+6. Sửa chữa code production.
+7. Kiểm tra lại để đảm bảo tất cả các bài kiểm thử đều vượt qua.
