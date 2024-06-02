@@ -2,6 +2,7 @@ package com.techyourchance.mockitofundamentals.exercise5;
 
 
 import com.techyourchance.mockitofundamentals.exercise5.eventbus.EventBusPoster;
+import com.techyourchance.mockitofundamentals.exercise5.eventbus.UserDetailsChangedEvent;
 import com.techyourchance.mockitofundamentals.exercise5.networking.NetworkErrorException;
 import com.techyourchance.mockitofundamentals.exercise5.networking.UpdateUsernameHttpEndpointSync;
 import com.techyourchance.mockitofundamentals.exercise5.testclass.Ex5Constants;
@@ -64,6 +65,7 @@ public class UpdateUsernameUseCaseSyncTest {
         //GIVEN
         ArgumentCaptor<String> stringArgsCapture = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+        ArgumentCaptor<Object> objectArgumentCaptor = ArgumentCaptor.forClass(Object.class);
 
         UpdateUsernameHttpEndpointSync.EndpointResult resultSucceed = new UpdateUsernameHttpEndpointSync.EndpointResult(
                 UpdateUsernameHttpEndpointSync.EndpointResultStatus.SUCCESS,
@@ -93,6 +95,10 @@ public class UpdateUsernameUseCaseSyncTest {
         Mockito.verify(usersCacheMock, Mockito.times(1))
                 .cacheUser(userArgumentCaptor.capture());
 
+        //Verify usersCacheMock.postEvent() run at least once
+        Mockito.verify(eventBusPosterMock, Mockito.times(1))
+                .postEvent(objectArgumentCaptor.capture());
+
         //Verify arguments pass is correct
         List<String> captures = stringArgsCapture.getAllValues();
 
@@ -103,6 +109,11 @@ public class UpdateUsernameUseCaseSyncTest {
         List<User> userCaptures = userArgumentCaptor.getAllValues();
         User expectedUser = new User(Ex5Constants.INPUT_USER_NAME, Ex5Constants.INPUT_PASS_WORD);
         Assert.assertEquals(expectedUser, userCaptures.get(0));
+
+        //Verify postEvent is UserDetailsChangedEvent
+        List<Object> eventBusPosterCaptured = objectArgumentCaptor.getAllValues();
+        boolean isUserDetailsChangedEvent = eventBusPosterCaptured.get(0) instanceof UserDetailsChangedEvent;
+        Assert.assertTrue(isUserDetailsChangedEvent);
     }
 
     //  2 - EndpointResultStatus = GENERAL_ERROR -> UseCaseResult = FAILURE, and not cached user
@@ -111,6 +122,7 @@ public class UpdateUsernameUseCaseSyncTest {
         //GIVEN
         ArgumentCaptor<String> stringArgsCapture = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+        ArgumentCaptor<Object> objectArgumentCaptor = ArgumentCaptor.forClass(Object.class);
 
         UpdateUsernameHttpEndpointSync.EndpointResult resultFailed = new UpdateUsernameHttpEndpointSync.EndpointResult(
                 UpdateUsernameHttpEndpointSync.EndpointResultStatus.GENERAL_ERROR,
@@ -140,6 +152,10 @@ public class UpdateUsernameUseCaseSyncTest {
         Mockito.verify(usersCacheMock, Mockito.never())
                 .cacheUser(userArgumentCaptor.capture());
 
+        //Verify usersCacheMock.postEvent() run at least once
+        Mockito.verify(eventBusPosterMock, Mockito.never())
+                .postEvent(objectArgumentCaptor.capture());
+
         //Verify arguments pass is correct
         List<String> captures = stringArgsCapture.getAllValues();
 
@@ -153,6 +169,7 @@ public class UpdateUsernameUseCaseSyncTest {
         //GIVEN
         ArgumentCaptor<String> stringArgsCapture = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+        ArgumentCaptor<Object> objectArgumentCaptor = ArgumentCaptor.forClass(Object.class);
 
         UpdateUsernameHttpEndpointSync.EndpointResult resultFailed = new UpdateUsernameHttpEndpointSync.EndpointResult(
                 UpdateUsernameHttpEndpointSync.EndpointResultStatus.AUTH_ERROR,
@@ -182,6 +199,10 @@ public class UpdateUsernameUseCaseSyncTest {
         Mockito.verify(usersCacheMock, Mockito.never())
                 .cacheUser(userArgumentCaptor.capture());
 
+        //Verify never usersCacheMock.postEvent()
+        Mockito.verify(eventBusPosterMock, Mockito.never())
+                .postEvent(objectArgumentCaptor.capture());
+
         //Verify arguments pass is correct
         List<String> captures = stringArgsCapture.getAllValues();
 
@@ -195,6 +216,7 @@ public class UpdateUsernameUseCaseSyncTest {
         //GIVEN
         ArgumentCaptor<String> stringArgsCapture = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+        ArgumentCaptor<Object> objectArgumentCaptor = ArgumentCaptor.forClass(Object.class);
 
         UpdateUsernameHttpEndpointSync.EndpointResult resultFailed = new UpdateUsernameHttpEndpointSync.EndpointResult(
                 UpdateUsernameHttpEndpointSync.EndpointResultStatus.SERVER_ERROR,
@@ -224,6 +246,10 @@ public class UpdateUsernameUseCaseSyncTest {
         Mockito.verify(usersCacheMock, Mockito.never())
                 .cacheUser(userArgumentCaptor.capture());
 
+        //Verify never run usersCacheMock.postEvent()
+        Mockito.verify(eventBusPosterMock, Mockito.never())
+                .postEvent(objectArgumentCaptor.capture());
+
         //Verify arguments pass is correct
         List<String> captures = stringArgsCapture.getAllValues();
 
@@ -237,6 +263,7 @@ public class UpdateUsernameUseCaseSyncTest {
         //GIVEN
         ArgumentCaptor<String> stringArgsCapture = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+        ArgumentCaptor<Object> objectArgumentCaptor = ArgumentCaptor.forClass(Object.class);
 
         //Setup inner function returns failed by general error result
         Mockito.when(updateUsernameHttpEndpointSyncMock.updateUsername(Mockito.anyString(), Mockito.anyString()))
@@ -259,6 +286,10 @@ public class UpdateUsernameUseCaseSyncTest {
         //Verify never usersCacheMock.cacheUser()
         Mockito.verify(usersCacheMock, Mockito.never())
                 .cacheUser(userArgumentCaptor.capture());
+
+        //Verify never run usersCacheMock.postEvent()
+        Mockito.verify(eventBusPosterMock, Mockito.never())
+                .postEvent(objectArgumentCaptor.capture());
 
         //Verify arguments pass is correct
         List<String> captures = stringArgsCapture.getAllValues();
