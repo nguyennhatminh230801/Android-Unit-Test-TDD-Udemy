@@ -36,7 +36,8 @@ public interface UpdateUsernameHttpEndpointSync {
         }
 
         public String getUsername() {
-            return mUserId;
+            //Fix bug: call right variables
+            return mUsername;
         }
     }
 }
